@@ -1,22 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Formulario;
 
-/**
- *
- * @author TDFM
- */
+import javax.swing.JOptionPane;
+import Conexion.Conexion;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
 public class Cliente extends javax.swing.JFrame {
+    Conexion conexionPostgres = new Conexion();
+    Connection con;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cliente.class.getName());
 
-    /**
-     * Creates new form Cliente
-     */
     public Cliente() {
         initComponents();
+        try{
+            con = conexionPostgres.getConexion();
+        }catch (SQLException e){
+                   e.getMessage();
+        }
     }
 
     /**
@@ -28,21 +35,150 @@ public class Cliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LBLid = new javax.swing.JLabel();
+        LBLnombre = new javax.swing.JLabel();
+        LBLapellido = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        BTNconsultar = new javax.swing.JButton();
+        BTNingresar = new javax.swing.JButton();
+        BTNactualizar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        LBLid.setText("ID");
+
+        LBLnombre.setText("Nombre");
+
+        LBLapellido.setText("Apellido");
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        BTNconsultar.setText("Consultar");
+        BTNconsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNconsultarActionPerformed(evt);
+            }
+        });
+
+        BTNingresar.setText("Ingresar");
+        BTNingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNingresarActionPerformed(evt);
+            }
+        });
+
+        BTNactualizar.setText("Actualizar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LBLid)
+                    .addComponent(LBLnombre)
+                    .addComponent(LBLapellido))
+                .addGap(74, 74, 74)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                    .addComponent(txtNombre)
+                    .addComponent(txtApellido))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BTNconsultar)
+                .addGap(18, 18, 18)
+                .addComponent(BTNingresar)
+                .addGap(18, 18, 18)
+                .addComponent(BTNactualizar)
+                .addGap(0, 19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLid)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLnombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLapellido)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTNconsultar)
+                    .addComponent(BTNingresar)
+                    .addComponent(BTNactualizar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void BTNingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNingresarActionPerformed
+        try{
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+
+            String qry = "insert into sistema_hotel.cliente(nombre, apellido)"
+                    +" values(?,?)";
+
+            PreparedStatement ps = con.prepareStatement(qry);
+            ps.setString(1, nombre);
+            ps.setString(2, apellido);
+
+            int filasInsertadas = ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Total de registros insertados"+filasInsertadas);
+            ps.close();
+
+        }catch (SQLException e){
+                   e.getMessage();
+        }
+    }//GEN-LAST:event_BTNingresarActionPerformed
+
+    private void BTNconsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNconsultarActionPerformed
+        try {
+            int id = Integer.parseInt(txtId.getText().trim());
+            String qry = "SELECT * FROM sistema_hotel.cliente WHERE id = ?";
+
+            try (PreparedStatement ps = con.prepareStatement(qry)) {
+                ps.setInt(1, id);
+                
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String nombre = rs.getString("nombre");
+                        String apellido = rs.getString("apellido");
+                        txtNombre.setText(nombre);
+                        txtApellido.setText(apellido);
+            
+            JOptionPane.showMessageDialog(this, "Registro encontrado");
+            JOptionPane.showMessageDialog(this, nombre +" " +apellido);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el cliente con ID " + id);
+                }
+            }
+        }
+
+        } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_BTNconsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +206,14 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNactualizar;
+    private javax.swing.JButton BTNconsultar;
+    private javax.swing.JButton BTNingresar;
+    private javax.swing.JLabel LBLapellido;
+    private javax.swing.JLabel LBLid;
+    private javax.swing.JLabel LBLnombre;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
