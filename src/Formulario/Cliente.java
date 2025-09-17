@@ -74,6 +74,11 @@ public class Cliente extends javax.swing.JFrame {
         });
 
         BTNactualizar.setText("Actualizar");
+        BTNactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNactualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,6 +184,34 @@ public class Cliente extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_BTNconsultarActionPerformed
+
+    private void BTNactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNactualizarActionPerformed
+    try {
+        String id = txtId.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+
+        String qry = "UPDATE sistema_hotel.cliente SET nombre = ?, apellido = ? WHERE id = ?";
+
+        PreparedStatement ps = con.prepareStatement(qry);
+        ps.setString(1, nombre);
+        ps.setString(2, apellido);
+        ps.setInt(3, Integer.parseInt(id));
+
+        int filasActualizadas = ps.executeUpdate();
+
+        if (filasActualizadas > 0) {
+            JOptionPane.showMessageDialog(null, "Registro actualizado correctamente");
+            } else {
+            JOptionPane.showMessageDialog(null, "No se encontró un cliente con el ID " + id);
+            }
+
+        ps.close();
+
+        }catch (SQLException e){
+                   e.getMessage();
+        }
+    }//GEN-LAST:event_BTNactualizarActionPerformed
 
     /**
      * @param args the command line arguments

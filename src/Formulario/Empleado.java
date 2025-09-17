@@ -1,14 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Formulario;
 
-/**
- *
- * @author TDFM
- */
+import javax.swing.JOptionPane;
+import Conexion.Conexion;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
 public class Empleado extends javax.swing.JFrame {
+    Conexion conexionPostgres = new Conexion();
+    Connection con;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Empleado.class.getName());
 
@@ -17,6 +22,11 @@ public class Empleado extends javax.swing.JFrame {
      */
     public Empleado() {
         initComponents();
+        try{
+            con = conexionPostgres.getConexion();
+        }catch (SQLException e){
+                   e.getMessage();
+        }
     }
 
     /**
@@ -28,21 +38,208 @@ public class Empleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LBLid = new javax.swing.JLabel();
+        LBLnombre = new javax.swing.JLabel();
+        LBLapellido = new javax.swing.JLabel();
+        LBLsalario = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtSalario = new javax.swing.JTextField();
+        BTNactualizar = new javax.swing.JButton();
+        BTNconsultar = new javax.swing.JButton();
+        BTNregistrar = new javax.swing.JButton();
+        BTNcalcular = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        LBLid.setText("ID");
+
+        LBLnombre.setText("Nombre");
+
+        LBLapellido.setText("Apellido");
+
+        LBLsalario.setText("Salario");
+
+        txtId.setText(" ");
+
+        txtNombre.setText(" ");
+
+        txtApellido.setText(" ");
+
+        txtSalario.setText(" ");
+
+        BTNactualizar.setText("Actualizar");
+        BTNactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNactualizarActionPerformed(evt);
+            }
+        });
+
+        BTNconsultar.setText("Consultar");
+        BTNconsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNconsultarActionPerformed(evt);
+            }
+        });
+
+        BTNregistrar.setText("Registrar");
+        BTNregistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNregistrarActionPerformed(evt);
+            }
+        });
+
+        BTNcalcular.setText("Calcular");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LBLid)
+                            .addComponent(LBLnombre)
+                            .addComponent(LBLapellido)
+                            .addComponent(LBLsalario))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(txtNombre)
+                            .addComponent(txtApellido)
+                            .addComponent(txtSalario)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(BTNconsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BTNactualizar)
+                        .addGap(9, 9, 9)
+                        .addComponent(BTNregistrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BTNcalcular)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLid)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLnombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLapellido)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LBLsalario)
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTNconsultar)
+                    .addComponent(BTNactualizar)
+                    .addComponent(BTNregistrar)
+                    .addComponent(BTNcalcular))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTNconsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNconsultarActionPerformed
+        try {
+            int id = Integer.parseInt(txtId.getText().trim());
+            String qry = "SELECT * FROM sistema_hotel.empleado WHERE id = ?";
+
+            try (PreparedStatement ps = con.prepareStatement(qry)) {
+                ps.setInt(1, id);
+                
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String nombre = rs.getString("nombre");
+                        String apellido = rs.getString("apellido");
+                        String salario = rs.getString("salario");
+                        txtNombre.setText(nombre);
+                        txtApellido.setText(apellido);
+                        txtSalario.setText(salario);
+            
+            JOptionPane.showMessageDialog(this, "Registro encontrado");
+            JOptionPane.showMessageDialog(this, nombre + " " +apellido + " " +"Q."+salario);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el cliente con ID " + id);
+                }
+            }
+        }
+
+        } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_BTNconsultarActionPerformed
+
+    private void BTNactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNactualizarActionPerformed
+    try {     
+        String id = txtId.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String salarioTxt = txtSalario.getText();
+        double salario = Double.parseDouble(salarioTxt);
+        
+        String qry = "UPDATE sistema_hotel.empleado SET nombre = ?, apellido = ?, salario = ? WHERE id = ?";
+
+        PreparedStatement ps = con.prepareStatement(qry);
+        ps.setString(1, nombre);
+        ps.setString(2, apellido);
+        ps.setDouble(3, salario);
+        ps.setInt(4, Integer.parseInt(id));
+
+        int filasActualizadas = ps.executeUpdate();
+
+        if (filasActualizadas > 0) {
+            JOptionPane.showMessageDialog(null, "Registro actualizado correctamente");
+            } else {
+            JOptionPane.showMessageDialog(null, "No se encontró un cliente con el ID " + id);
+            }
+
+        ps.close();
+
+        }catch (SQLException e){
+                   e.getMessage();
+        }
+    }//GEN-LAST:event_BTNactualizarActionPerformed
+
+    private void BTNregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNregistrarActionPerformed
+        try{
+            String id = txtId.getText();    
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String salarioTxt = txtSalario.getText();
+            double salario = Double.parseDouble(salarioTxt);
+        
+            String qry = "INSERT INTO sistema_hotel.empleado(nombre, apellido, salario)"
+                    +" values(?,?,?)";
+
+            PreparedStatement ps = con.prepareStatement(qry);
+            ps.setString(1, nombre);
+            ps.setString(2, apellido);
+            ps.setDouble(3, salario);
+            ps.setString(4, id);
+
+            int filasInsertadas = ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Total de registros insertados"+filasInsertadas);
+            ps.close();
+
+        }catch (SQLException e){
+                   e.getMessage();
+        }
+    }//GEN-LAST:event_BTNregistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +267,17 @@ public class Empleado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNactualizar;
+    private javax.swing.JButton BTNcalcular;
+    private javax.swing.JButton BTNconsultar;
+    private javax.swing.JButton BTNregistrar;
+    private javax.swing.JLabel LBLapellido;
+    private javax.swing.JLabel LBLid;
+    private javax.swing.JLabel LBLnombre;
+    private javax.swing.JLabel LBLsalario;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }
