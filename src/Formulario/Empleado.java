@@ -107,7 +107,7 @@ public class Empleado extends javax.swing.JFrame {
                             .addComponent(LBLsalario))
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(txtNombre)
                             .addComponent(txtApellido)
                             .addComponent(txtSalario)))
@@ -185,11 +185,12 @@ public class Empleado extends javax.swing.JFrame {
 
     private void BTNactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNactualizarActionPerformed
     try {     
-        String id = txtId.getText();
+        String idTxt = txtId.getText();
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
         String salarioTxt = txtSalario.getText();
         double salario = Double.parseDouble(salarioTxt);
+        int id = Integer.parseInt(idTxt.trim());
         
         String qry = "UPDATE sistema_hotel.empleado SET nombre = ?, apellido = ?, salario = ? WHERE id = ?";
 
@@ -197,7 +198,7 @@ public class Empleado extends javax.swing.JFrame {
         ps.setString(1, nombre);
         ps.setString(2, apellido);
         ps.setDouble(3, salario);
-        ps.setInt(4, Integer.parseInt(id));
+        ps.setInt(4, id);
 
         int filasActualizadas = ps.executeUpdate();
 
@@ -215,13 +216,12 @@ public class Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_BTNactualizarActionPerformed
 
     private void BTNregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNregistrarActionPerformed
-        try{
-            String id = txtId.getText();    
+        try{  
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             String salarioTxt = txtSalario.getText();
-            double salario = Double.parseDouble(salarioTxt);
-        
+            double salario = Double.parseDouble(salarioTxt.trim());
+            
             String qry = "INSERT INTO sistema_hotel.empleado(nombre, apellido, salario)"
                     +" values(?,?,?)";
 
@@ -229,7 +229,6 @@ public class Empleado extends javax.swing.JFrame {
             ps.setString(1, nombre);
             ps.setString(2, apellido);
             ps.setDouble(3, salario);
-            ps.setString(4, id);
 
             int filasInsertadas = ps.executeUpdate();
 
