@@ -20,6 +20,6 @@ public class ProyectoGit {
             public void run() {
                 new Login().setVisible(true);
             }
-        });
+        }); 
     }
 }

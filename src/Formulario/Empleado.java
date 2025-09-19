@@ -49,7 +49,7 @@ public class Empleado extends javax.swing.JFrame {
         BTNactualizar = new javax.swing.JButton();
         BTNconsultar = new javax.swing.JButton();
         BTNregistrar = new javax.swing.JButton();
-        BTNcalcular = new javax.swing.JButton();
+        BTNeliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,7 +90,12 @@ public class Empleado extends javax.swing.JFrame {
             }
         });
 
-        BTNcalcular.setText("Calcular");
+        BTNeliminar.setText("Eliminar");
+        BTNeliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNeliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,7 +124,7 @@ public class Empleado extends javax.swing.JFrame {
                         .addGap(9, 9, 9)
                         .addComponent(BTNregistrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BTNcalcular)))
+                        .addComponent(BTNeliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -146,7 +151,7 @@ public class Empleado extends javax.swing.JFrame {
                     .addComponent(BTNconsultar)
                     .addComponent(BTNactualizar)
                     .addComponent(BTNregistrar)
-                    .addComponent(BTNcalcular))
+                    .addComponent(BTNeliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -240,6 +245,31 @@ public class Empleado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BTNregistrarActionPerformed
 
+    private void BTNeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNeliminarActionPerformed
+    try {
+        String idTxt = txtId.getText();
+        int id = Integer.parseInt(idTxt.trim());
+        
+        String qry = "DELETE FROM sistema_hotel.empleado WHERE id = ?";
+
+        PreparedStatement ps = con.prepareStatement(qry);
+        ps.setInt(1, id);
+
+        int filasActualizadas = ps.executeUpdate();
+
+        if (filasActualizadas > 0) {
+            JOptionPane.showMessageDialog(null, "Registro actualizado correctamente");
+            } else {
+            JOptionPane.showMessageDialog(null, "No se encontró un cliente con el ID " + id);
+            }
+
+        ps.close();
+
+        }catch (SQLException e){
+                   e.getMessage();
+        }
+    }//GEN-LAST:event_BTNeliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,8 +297,8 @@ public class Empleado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNactualizar;
-    private javax.swing.JButton BTNcalcular;
     private javax.swing.JButton BTNconsultar;
+    private javax.swing.JButton BTNeliminar;
     private javax.swing.JButton BTNregistrar;
     private javax.swing.JLabel LBLapellido;
     private javax.swing.JLabel LBLid;
